@@ -2,7 +2,7 @@ import { ItemStatus, ShoppingItem } from "@/types/shopping-item";
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 
 
-const apiKey = process.env.API_KEY || 'AIzaSyBly-AM9mIShV31hMYIUSYnRyp0PmlFlX4';
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey });
 
 // Helper to create a UUID

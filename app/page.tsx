@@ -207,7 +207,7 @@ export default function Home() {
               {completedCount > 0 && (
                 <button
                   onClick={handleClearCompleted}
-                  className="text-xs font-medium text-red-500 hover:text-red-600 hover:bg-red-50 px-2 sm:px-3 py-1.5 rounded-full transition-colors whitespace-nowrap"
+                  className="text-xs font-medium cursor-pointer text-yellow-500 hover:text-yellow-600 hover:bg-yellow-50 px-2 sm:px-3 py-1.5 rounded-full transition-colors whitespace-nowrap"
                   title="Limpar itens comprados"
                 >
                   <span className="hidden sm:inline">Limpar comprados</span>
@@ -216,7 +216,7 @@ export default function Home() {
               )}
               <button
                 onClick={handleShareList}
-                className="p-2 text-gray-500 hover:text-primary hover:bg-emerald-50 rounded-full transition-colors"
+                className="p-2 text-gray-500 cursor-pointer hover:text-primary hover:bg-emerald-50 rounded-full transition-colors"
                 aria-label="Compartilhar lista"
                 title="Compartilhar lista"
               >
