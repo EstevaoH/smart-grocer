@@ -14,6 +14,7 @@ interface AddItemProps {
 export const addItemSchema = z.object({
     name: z.string().min(1, 'Nome é obrigatório').max(100, 'Nome muito longo'),
     category: z.string().min(1, 'Categoria é obrigatória'),
+    quantity: z.string().optional(),
     price: z
         .string()
         .optional()
@@ -38,6 +39,7 @@ export function AddItem({ onAddItem }: AddItemProps) {
         defaultValues: {
             name: '',
             category: DEFAULT_CATEGORIES[0],
+            quantity: '',
             price: '',
         },
     });
@@ -47,6 +49,7 @@ export function AddItem({ onAddItem }: AddItemProps) {
             id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
             name: data.name.trim(),
             category: data.category,
+            quantity: data.quantity?.trim() || undefined,
             price: data.price ? parseFloat(data.price) : 0,
             status: ItemStatus.PENDING,
         };
@@ -102,6 +105,16 @@ export function AddItem({ onAddItem }: AddItemProps) {
                             {errors.name && (
                                 <p className="mt-1 text-xs text-red-500 pl-1">{errors.name.message}</p>
                             )}
+                        </div>
+
+                        {/* Quantidade */}
+                        <div>
+                            <input
+                                {...register('quantity')}
+                                type="text"
+                                placeholder="Quantidade (ex: 2 kg, 1 dúzia, 500 ml)"
+                                className="w-full text-gray-700 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-colors"
+                            />
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">

@@ -2,8 +2,7 @@
 
 import { ItemStatus, ShoppingItem } from "@/types/shopping-item";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { ShoppingBasket, AlertCircle, CheckCircle2, Share2, Trash2 } from "lucide-react";
+import { ShoppingBasket, AlertCircle, CheckCircle2, Share2, Trash2, Heart } from "lucide-react";
 import { AddItem } from "@/components/add-item";
 import { RecipeGenerator } from "@/components/recipe-generator";
 import { ShoppingList } from "@/components/shopping-list";
@@ -158,7 +157,7 @@ export default function Home() {
     });
 
     const total = items.reduce((sum, i) => sum + (i.price || 0), 0);
-    text += `💰 *Total: $${total.toFixed(2)}*`;
+    text += `💰 *Total: $${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}*`;
 
     if (navigator.share) {
       try {
@@ -230,9 +229,9 @@ export default function Home() {
                 <span>{completedCount} de {totalCount} itens comprados</span>
                 <div className="text-right">
                   <span className="text-gray-400 mr-1">Total:</span>
-                  <span className="font-bold text-gray-800 text-sm">R${totalPrice.toFixed(2)}</span>
+                  <span className="font-bold text-gray-800 text-sm">R${totalPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   {completedPrice > 0 && (
-                    <span className="text-emerald-600 ml-2">· Gasto: R${completedPrice.toFixed(2)}</span>
+                    <span className="text-emerald-600 ml-2">· Gasto: R${completedPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   )}
                 </div>
               </div>
@@ -291,7 +290,9 @@ export default function Home() {
           </div>
         )}
       </main>
-
+      <footer className="text-center text-gray-500 text-sm mt-8 mb-6">
+        <p className="flex items-center justify-center gap-1">Feito com <Heart className="text-green-500" size={13} fill="currentColor" /> por <a href="https://github.com/estevaoh" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Estevão</a></p>
+      </footer>
       <ConfirmModal
         isOpen={confirmModal.isOpen}
         title={confirmModal.title}
