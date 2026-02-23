@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 SmartGrocer
 
-## Getting Started
+Lista de compras inteligente com geração de ingredientes por IA.
 
-First, run the development server:
+## ✨ Funcionalidades
+
+- **Adicionar itens manualmente** — com nome, quantidade, categoria e preço
+- **Gerador de receitas** — descreva o prato e a IA sugere os ingredientes automaticamente
+- **Análise de texto** — cole uma lista desestruturada e a IA organiza para você
+- **Marcar como comprado** — acompanhe o progresso da sua lista em tempo real
+- **Resumo financeiro** — total estimado e total já gasto
+- **Compartilhar lista** — via Web Share API ou cópia para área de transferência
+- **Persistência local** — os dados ficam salvos no `localStorage`
+
+## 🚀 Como rodar
 
 ```bash
+# Instale as dependências
+npm install
+
+# Configure a chave da API do Gemini
+# Crie um arquivo .env.local na raiz:
+GEMINI_API_KEY=sua_chave_aqui
+
+# Rode em desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse em [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Tecnologia | Uso |
+|---|---|
+| [Next.js 16](https://nextjs.org) | Framework React (App Router) |
+| [Tailwind CSS v4](https://tailwindcss.com) | Estilização |
+| [Gemini API](https://ai.google.dev) | IA para geração de listas |
+| [React Hook Form](https://react-hook-form.com) | Formulários |
+| [Zod](https://zod.dev) | Validação de esquemas |
+| [Lucide React](https://lucide.dev) | Ícones |
 
-## Learn More
+## 📁 Estrutura
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  page.tsx          # Página principal
+  layout.tsx        # Layout global
+  globals.css       # Estilos e tema
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+components/
+  add-item.tsx      # Formulário de adição manual
+  shopping-list.tsx # Lista de itens
+  recipe-generator.tsx # Gerador por IA
+  confirm-modal.tsx # Modal de confirmação
+  alert-modal.tsx   # Modal de alerta
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+service/
+  geminiService.ts  # Integração com Gemini API
 
-## Deploy on Vercel
+types/
+  shopping-item.ts  # Tipos e enums
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 Licença
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © [Estevão](https://github.com/estevaoh)
