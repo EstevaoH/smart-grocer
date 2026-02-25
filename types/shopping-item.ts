@@ -10,6 +10,7 @@ export interface ShoppingItem {
     quantity?: string;
     price?: number;
     status: ItemStatus;
+    createdAt?: string; // ISO date string
 }
 
 export interface CategoryGroup {

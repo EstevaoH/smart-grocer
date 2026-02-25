@@ -52,6 +52,7 @@ export function AddItem({ onAddItem }: AddItemProps) {
             quantity: data.quantity?.trim() || undefined,
             price: data.price ? parseFloat(data.price) : 0,
             status: ItemStatus.PENDING,
+            createdAt: new Date().toISOString(),
         };
 
         onAddItem(newItem);
