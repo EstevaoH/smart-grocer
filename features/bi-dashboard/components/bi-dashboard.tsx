@@ -13,11 +13,11 @@ import {
     CalendarDays, Minus, Download, Target, Pencil, Check, X,
     AlertTriangle, Trophy,
 } from "lucide-react";
-import { CATEGORY_COLORS, MONTH_NAMES, STORAGE_BUDGET } from "@/constants";
+import { CATEGORY_COLORS, STORAGE_BUDGET } from "@/constants";
 import { fmt, toDateStr, itemMonthKey, itemDayKey, monthLabel } from "@/utils/formatter-date";
 import { exportCSV } from "@/utils/export-csv";
 import { StatCard } from "./stat-card";
-import { TabBtn } from "./tab-btn";
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, LineElement, PointElement, Filler);
 
 interface BIDashboardProps { items: ShoppingItem[] }
