@@ -174,9 +174,9 @@ export function BIDashboard({ items }: BIDashboardProps) {
 
     const handleSort = (k: SortKey) => { if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc"); else { setSortKey(k); setSortDir("asc"); } };
 
-    const barOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "top" as const, labels: { font: { size: 12 }, color: "#6b7280" } }, tooltip: { callbacks: { label: (c: { dataset: { label?: string }; raw: unknown }) => ` ${c.dataset.label}: R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 11 } }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 11 }, callback: (v: number | string) => `R$ ${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
-    const pieOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right" as const, labels: { font: { size: 12 }, color: "#6b7280", padding: 14 } }, tooltip: { callbacks: { label: (c: { label?: string; raw: unknown; chart: { data: { datasets: Array<{ data: unknown[] }> } } }) => { const total = (c.chart.data.datasets[0].data as number[]).reduce((s, v) => s + Number(v), 0); return ` ${c.label}: R$ ${fmt(Number(c.raw))} (${total > 0 ? ((Number(c.raw) / total) * 100).toFixed(1) : 0}%)`; } } } } };
-    const lineOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: { raw: unknown }) => ` R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 11 } }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 11 }, callback: (v: number | string) => `R$ ${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
+    const barOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "top" as const, labels: { font: { size: 11 }, color: "#6b7280", boxWidth: 12, padding: 10 } }, tooltip: { callbacks: { label: (c: { dataset: { label?: string }; raw: unknown }) => ` ${c.dataset.label}: R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 10 }, maxRotation: 30 }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 10 }, callback: (v: number | string) => `R$${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
+    const pieOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" as const, labels: { font: { size: 11 }, color: "#6b7280", padding: 10, boxWidth: 12 } }, tooltip: { callbacks: { label: (c: { label?: string; raw: unknown; chart: { data: { datasets: Array<{ data: unknown[] }> } } }) => { const total = (c.chart.data.datasets[0].data as number[]).reduce((s, v) => s + Number(v), 0); return ` ${c.label}: R$ ${fmt(Number(c.raw))} (${total > 0 ? ((Number(c.raw) / total) * 100).toFixed(1) : 0}%)`; } } } } };
+    const lineOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: { raw: unknown }) => ` R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 10 }, callback: (v: number | string) => `R$${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
 
     const barData = { labels: categoryStats.map(c => c.cat), datasets: [{ label: "Planejado (R$)", data: categoryStats.map(c => c.planned), backgroundColor: categoryStats.map(c => c.color + "cc"), borderColor: categoryStats.map(c => c.color), borderWidth: 1.5, borderRadius: 6 }, { label: "Gasto (R$)", data: categoryStats.map(c => c.spent), backgroundColor: categoryStats.map(c => c.color + "55"), borderColor: categoryStats.map(c => c.color), borderWidth: 1.5, borderRadius: 6 }] };
     const pieData = { labels: categoryStats.map(c => c.cat), datasets: [{ data: categoryStats.map(c => c.planned), backgroundColor: categoryStats.map(c => c.color + "cc"), borderColor: categoryStats.map(c => c.color), borderWidth: 2, hoverOffset: 8 }] };
@@ -208,34 +208,37 @@ export function BIDashboard({ items }: BIDashboardProps) {
         <div className="space-y-5">
 
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-                <div className="flex flex-wrap items-end gap-3">
-                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                <div className="grid grid-cols-2 gap-2">
+                    <div className="flex flex-col gap-1">
                         <label className="text-xs font-medium text-gray-500">De</label>
-                        <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} className="px-3 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-primary" />
+                        <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} className="w-full px-2.5 py-2 text-xs sm:text-sm border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-primary" />
                     </div>
-                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                    <div className="flex flex-col gap-1">
                         <label className="text-xs font-medium text-gray-500">Até</label>
-                        <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} className="px-3 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-primary" />
+                        <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} className="w-full px-2.5 py-2 text-xs sm:text-sm border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-primary" />
                     </div>
-                    <button
-                        onClick={() => setFilterActive(f => !f)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filterActive ? "bg-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
-                    >
-                        {filterActive ? "Filtro ativo" : "Filtrar"}
-                    </button>
-                    {filterActive && (
-                        <button onClick={() => setFilterActive(false)} className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors"><X size={16} /></button>
-                    )}
-                    <button onClick={() => exportCSV(filtered)} className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-600 hover:bg-emerald-50 hover:text-primary transition-all">
-                        <Download size={15} />CSV
-                    </button>
+                    <div className="col-span-2 flex gap-2">
+                        <button
+                            onClick={() => setFilterActive(f => !f)}
+                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${filterActive ? "bg-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                        >
+                            {filterActive ? "✓ Filtro ativo" : "Filtrar por data"}
+                        </button>
+                        {filterActive && (
+                            <button onClick={() => setFilterActive(false)} className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors" aria-label="Limpar filtro"><X size={16} /></button>
+                        )}
+                        <button onClick={() => exportCSV(filtered)} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-600 hover:bg-emerald-50 hover:text-primary transition-all" aria-label="Exportar CSV">
+                            <Download size={15} /><span className="hidden xs:inline sm:inline">CSV</span>
+                        </button>
+                    </div>
                 </div>
                 {filterActive && (
                     <p className="text-xs text-primary mt-2 font-medium">
-                        Mostrando {filtered.length} de {items.length} itens
+                        {filtered.length} de {items.length} itens no período
                     </p>
                 )}
             </div>
+
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <StatCard icon={<ShoppingCart size={18} className="text-blue-500" />} label="Total de itens" value={metrics.totalItems.toString()} bg="bg-blue-50" />
@@ -285,12 +288,26 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 )}
             </div>
 
-            <div className="flex gap-2 flex-wrap">
-                <TabBtn active={activeView === "charts"} onClick={() => setActiveView("charts")} icon={<PieChart size={15} />}>Gráficos</TabBtn>
-                <TabBtn active={activeView === "table"} onClick={() => setActiveView("table")} icon={<TableProperties size={15} />}>Tabela</TabBtn>
-                <TabBtn active={activeView === "mensal"} onClick={() => setActiveView("mensal")} icon={<CalendarDays size={15} />}>Mensal</TabBtn>
-                <TabBtn active={activeView === "categoria"} onClick={() => setActiveView("categoria")} icon={<TrendingUp size={15} />}>Categoria</TabBtn>
-                <TabBtn active={activeView === "mapa"} onClick={() => setActiveView("mapa")} icon={<BarChart2 size={15} />}>Mapa</TabBtn>
+            <div className="grid grid-cols-5 gap-1.5 sm:flex sm:gap-2">
+                {([
+                    { id: "charts" as ActiveView, label: "Gráficos", icon: <PieChart size={15} /> },
+                    { id: "table" as ActiveView, label: "Tabela", icon: <TableProperties size={15} /> },
+                    { id: "mensal" as ActiveView, label: "Mensal", icon: <CalendarDays size={15} /> },
+                    { id: "categoria" as ActiveView, label: "Categ.", icon: <TrendingUp size={15} /> },
+                    { id: "mapa" as ActiveView, label: "Mapa", icon: <BarChart2 size={15} /> },
+                ] as { id: ActiveView; label: string; icon: React.ReactNode }[]).map(tab => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveView(tab.id)}
+                        className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 px-2 py-2 sm:px-4 rounded-xl border text-[10px] sm:text-sm font-medium transition-all ${activeView === tab.id
+                            ? "bg-primary text-white border-primary shadow-sm shadow-emerald-200"
+                            : "bg-white text-gray-500 border-gray-200 hover:border-primary hover:text-primary"
+                            }`}
+                    >
+                        {tab.icon}
+                        <span className="leading-none">{tab.label}</span>
+                    </button>
+                ))}
             </div>
 
             {emptyState && (
@@ -310,19 +327,18 @@ export function BIDashboard({ items }: BIDashboardProps) {
                     <div className="grid sm:grid-cols-2 gap-4">
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                             <h3 className="text-sm font-semibold text-gray-700 mb-3">Distribuição por Categoria</h3>
-                            <div className="h-56"><Pie data={pieData} options={pieOpts} /></div>
+                            <div className="h-64 sm:h-56"><Pie data={pieData} options={pieOpts} /></div>
                         </div>
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                             <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5"><Trophy size={15} className="text-amber-400" />Top 5 mais caros</h3>
                             {top5.length === 0 ? (
                                 <p className="text-sm text-gray-400 text-center py-8">Nenhum item com preço</p>
                             ) : (
-                                <div className="space-y-2">
+                                <div className="space-y-2.5">
                                     {top5.map((item, idx) => (
                                         <div key={item.id} className="flex items-center gap-2">
                                             <span className={`w-5 h-5 shrink-0 rounded-full text-xs font-bold flex items-center justify-center text-white ${["bg-amber-400", "bg-gray-400", "bg-orange-500", "bg-gray-300", "bg-gray-300"][idx]}`}>{idx + 1}</span>
-                                            <span className="flex-1 text-xs text-gray-700 truncate font-medium">{item.name}</span>
-                                            <span className="text-xs text-gray-400 truncate max-w-[70px]">{item.category || "Outros"}</span>
+                                            <span className="flex-1 text-xs text-gray-700 truncate font-medium min-w-0">{item.name}</span>
                                             <span className="text-xs font-bold text-gray-800 shrink-0">R$ {fmt(item.price || 0)}</span>
                                         </div>
                                     ))}
@@ -340,12 +356,12 @@ export function BIDashboard({ items }: BIDashboardProps) {
 
             {!emptyState && activeView === "table" && (
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
+                    <div className="overflow-x-auto -mx-0">
+                        <table className="w-full text-sm min-w-[420px]">
                             <thead>
                                 <tr className="bg-gray-50 border-b border-gray-100">
-                                    {([["name", "Produto"], ["category", "Categoria"], ["quantity", "Quantidade"], ["price", "Preço (R$)"], ["status", "Status"]] as [SortKey, string][]).map(([k, l]) => (
-                                        <th key={k} onClick={() => handleSort(k)} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 cursor-pointer select-none hover:text-primary transition-colors whitespace-nowrap">
+                                    {([["name", "Produto"], ["category", "Categ."], ["price", "Preço"], ["status", "Status"]] as [SortKey, string][]).map(([k, l]) => (
+                                        <th key={k} onClick={() => handleSort(k)} className="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 cursor-pointer select-none hover:text-primary transition-colors whitespace-nowrap">
                                             <span className="flex items-center gap-0.5">{l}<SortIcon col={k} /></span>
                                         </th>
                                     ))}
@@ -354,12 +370,16 @@ export function BIDashboard({ items }: BIDashboardProps) {
                             <tbody className="divide-y divide-gray-50">
                                 {sortedItems.map(item => (
                                     <tr key={item.id} className={`hover:bg-gray-50 transition-colors ${item.status === ItemStatus.COMPLETED ? "opacity-60" : ""}`}>
-                                        <td className="px-4 py-3 font-medium text-gray-800 max-w-[140px] truncate">{item.name}</td>
-                                        <td className="px-4 py-3 text-gray-500"><span className="inline-flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[categoryStats.findIndex(c => c.cat === (item.category || "Outros")) % CATEGORY_COLORS.length] || "#10b981" }} />{item.category || "Outros"}</span></td>
-                                        <td className="px-4 py-3 text-gray-500">{item.quantity || "—"}</td>
-                                        <td className="px-4 py-3 font-semibold text-gray-800">{item.price ? `R$ ${fmt(item.price)}` : "—"}</td>
-                                        <td className="px-4 py-3">
-                                            <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${item.status === ItemStatus.COMPLETED ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+                                        <td className="px-3 py-2.5 font-medium text-gray-800 max-w-[130px] truncate">{item.name}</td>
+                                        <td className="px-3 py-2.5 text-gray-500 max-w-[90px] truncate">
+                                            <span className="inline-flex items-center gap-1">
+                                                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: CATEGORY_COLORS[categoryStats.findIndex(c => c.cat === (item.category || "Outros")) % CATEGORY_COLORS.length] || "#10b981" }} />
+                                                <span className="truncate">{item.category || "Outros"}</span>
+                                            </span>
+                                        </td>
+                                        <td className="px-3 py-2.5 font-semibold text-gray-800 whitespace-nowrap">{item.price ? `R$ ${fmt(item.price)}` : "—"}</td>
+                                        <td className="px-3 py-2.5">
+                                            <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${item.status === ItemStatus.COMPLETED ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full ${item.status === ItemStatus.COMPLETED ? "bg-emerald-500" : "bg-amber-400"}`} />
                                                 {item.status === ItemStatus.COMPLETED ? "Comprado" : "Pendente"}
                                             </span>
@@ -369,9 +389,9 @@ export function BIDashboard({ items }: BIDashboardProps) {
                             </tbody>
                             <tfoot>
                                 <tr className="bg-gray-50 border-t border-gray-200">
-                                    <td colSpan={3} className="px-4 py-3 text-xs font-semibold text-gray-500">{filtered.length} produto{filtered.length !== 1 ? "s" : ""}</td>
-                                    <td className="px-4 py-3 text-sm font-bold text-gray-800">R$ {fmt(metrics.totalPlanned)}</td>
-                                    <td className="px-4 py-3 text-xs text-gray-400">Gasto: <span className="font-semibold text-emerald-600">R$ {fmt(metrics.totalSpent)}</span></td>
+                                    <td colSpan={2} className="px-3 py-2.5 text-xs font-semibold text-gray-500">{filtered.length} produto{filtered.length !== 1 ? "s" : ""}</td>
+                                    <td className="px-3 py-2.5 text-sm font-bold text-gray-800 whitespace-nowrap">R$ {fmt(metrics.totalPlanned)}</td>
+                                    <td className="px-3 py-2.5 text-xs text-gray-400 whitespace-nowrap">Gasto: <span className="font-semibold text-emerald-600">R$ {fmt(metrics.totalSpent)}</span></td>
                                 </tr>
                             </tfoot>
                         </table>
