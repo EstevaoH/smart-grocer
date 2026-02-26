@@ -4,7 +4,7 @@ import { ItemStatus, ShoppingItem } from "@/types/shopping-item";
 import { DEFAULT_PROFILE, UserProfile, loadProfile, saveProfile } from "@/types/user-profile";
 import { ListSnapshot, createSnapshot, loadHistory, saveHistory } from "@/types/list-history";
 import { useEffect, useRef, useState } from "react";
-import { ShoppingBasket, AlertCircle, CheckCircle2, Share2, Trash2, Heart, BarChart2, ShoppingCart, Settings, Archive, Clock } from "lucide-react";
+import { ShoppingBasket, AlertCircle, CheckCircle2, Share2, Trash2, Heart, BarChart2, ShoppingCart, Settings, Archive, Clock, Calculator } from "lucide-react";
 import { AddItem } from "@/components/add-item";
 import { RecipeGenerator } from "@/components/recipe-generator";
 import { ShoppingList } from "@/components/shopping-list";
@@ -12,6 +12,7 @@ import { ConfirmModal } from "@/components/confirm-modal";
 import { OnboardingWizard } from "@/components/onboarding-wizard";
 import { SettingsModal } from "@/components/settings-modal";
 import { ListHistory } from "@/components/list-history";
+import { PriceCalculator } from "@/components/price-calculator";
 import dynamic from "next/dynamic";
 
 const BIDashboard = dynamic(
@@ -25,7 +26,7 @@ export default function Home() {
 
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"lista" | "bi" | "historico">("lista");
+  const [activeTab, setActiveTab] = useState<"lista" | "bi" | "historico" | "calculadora">("lista");
   const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILE);
   const [showSettings, setShowSettings] = useState(false);
   const [history, setHistory] = useState<ListSnapshot[]>([]);
@@ -375,6 +376,16 @@ export default function Home() {
                 <span className="ml-0.5 bg-gray-200 text-gray-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full">{history.length}</span>
               )}
             </button>
+            <button
+              onClick={() => setActiveTab("calculadora")}
+              className={`flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-t-xl border-b-2 transition-all whitespace-nowrap ${activeTab === "calculadora"
+                ? "border-primary text-primary bg-emerald-50/60"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <Calculator size={15} />
+              Calculadora
+            </button>
           </div>
 
           {activeTab === "lista" && totalCount > 0 && (
@@ -458,6 +469,16 @@ export default function Home() {
               </span>
             </div>
             <BIDashboard items={items} />
+          </>
+        )}
+
+        {activeTab === "calculadora" && (
+          <>
+            <div className="mb-5 flex items-center gap-2">
+              <h2 className="text-lg font-bold text-gray-800">Calculadora de Preço</h2>
+              <div className="h-px bg-gray-200 flex-1"></div>
+            </div>
+            <PriceCalculator />
           </>
         )}
 
