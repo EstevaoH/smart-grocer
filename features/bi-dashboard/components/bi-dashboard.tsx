@@ -28,7 +28,6 @@ type ActiveView = "charts" | "table" | "mensal" | "categoria" | "mapa";
 
 
 
-
 export function BIDashboard({ items }: BIDashboardProps) {
     const [sortKey, setSortKey] = useState<SortKey>("name");
     const [sortDir, setSortDir] = useState<SortDir>("asc");
