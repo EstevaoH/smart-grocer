@@ -16,7 +16,8 @@ import {
 import { CATEGORY_COLORS, MONTH_NAMES, STORAGE_BUDGET } from "@/constants";
 import { fmt, toDateStr, itemMonthKey, itemDayKey, monthLabel } from "@/utils/formatter-date";
 import { exportCSV } from "@/utils/export-csv";
-
+import { StatCard } from "./stat-card";
+import { TabBtn } from "./tab-btn";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, LineElement, PointElement, Filler);
 
 interface BIDashboardProps { items: ShoppingItem[] }
@@ -521,22 +522,5 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
         </div>
-    );
-}
-
-function StatCard({ icon, label, value, bg }: { icon: React.ReactNode; label: string; value: string; bg: string }) {
-    return (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-start gap-3">
-            <div className={`${bg} p-2 rounded-xl shrink-0`}>{icon}</div>
-            <div className="min-w-0"><p className="text-xs text-gray-500 font-medium truncate">{label}</p><p className="text-base font-bold text-gray-800 truncate">{value}</p></div>
-        </div>
-    );
-}
-
-function TabBtn({ active, onClick, icon, children }: { active: boolean; onClick: () => void; icon: React.ReactNode; children: React.ReactNode }) {
-    return (
-        <button onClick={onClick} className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl border transition-all ${active ? "bg-primary text-white border-primary shadow-sm shadow-emerald-200" : "bg-white text-gray-500 border-gray-200 hover:border-primary hover:text-primary"}`}>
-            {icon}{children}
-        </button>
     );
 }
