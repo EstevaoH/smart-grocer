@@ -47,7 +47,6 @@ export function ShoppingList({ items, onToggleStatus, onUpdateItem, onDeleteItem
         <div className="space-y-4">
             {groupedItems.map((group) => (
                 <div key={group.category} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    {/* Cabeçalho da categoria */}
                     <div className="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
                         <h3 className="font-semibold text-gray-700 flex items-center gap-2 text-sm">
                             <span className="w-2 h-2 rounded-full bg-primary shrink-0"></span>
@@ -71,7 +70,6 @@ export function ShoppingList({ items, onToggleStatus, onUpdateItem, onDeleteItem
                                 key={item.id}
                                 className={`flex items-center gap-3 px-4 py-3 transition-all ${item.status === ItemStatus.COMPLETED ? 'bg-gray-50/50' : 'hover:bg-gray-50'}`}
                             >
-                                {/* Botão de check */}
                                 <button
                                     onClick={() => onToggleStatus(item.id)}
                                     className={`
@@ -85,7 +83,6 @@ export function ShoppingList({ items, onToggleStatus, onUpdateItem, onDeleteItem
                                     <Check size={13} strokeWidth={3} />
                                 </button>
 
-                                {/* Nome e quantidade */}
                                 <div className={`flex flex-col flex-1 min-w-0 ${item.status === ItemStatus.COMPLETED ? 'opacity-40 line-through' : ''}`}>
                                     <span className="text-gray-800 font-medium text-sm truncate">{item.name}</span>
                                     {item.quantity && (
@@ -93,7 +90,6 @@ export function ShoppingList({ items, onToggleStatus, onUpdateItem, onDeleteItem
                                     )}
                                 </div>
 
-                                {/* Input de preço */}
                                 <div className="relative shrink-0 w-24">
                                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">R$</span>
                                     <input
@@ -108,7 +104,6 @@ export function ShoppingList({ items, onToggleStatus, onUpdateItem, onDeleteItem
                                     />
                                 </div>
 
-                                {/* Botão deletar — sempre visível no mobile, hover no desktop */}
                                 <button
                                     onClick={() => onDeleteItem(item.id)}
                                     className="shrink-0 text-gray-500 hover:text-red-500 sm:group-hover:opacity-100 active:text-red-500 transition-all p-1.5 rounded-lg hover:bg-red-50 active:bg-red-50"

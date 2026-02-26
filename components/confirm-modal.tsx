@@ -26,17 +26,14 @@ export function ConfirmModal({
     if (!isOpen) return null;
 
     return (
-        // Backdrop
         <div
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
             onClick={onCancel}
         >
-            {/* Modal panel */}
             <div
                 className="w-full max-w-sm bg-white rounded-2xl shadow-2xl animate-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Cabeçalho */}
                 <div className="flex items-start justify-between p-5 pb-3">
                     <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-xl ${variant === "danger" ? "bg-red-50" : "bg-yellow-50"}`}>
@@ -56,10 +53,8 @@ export function ConfirmModal({
                     </button>
                 </div>
 
-                {/* Mensagem */}
                 <p className="px-5 pb-5 text-sm text-gray-500 leading-relaxed">{message}</p>
 
-                {/* Ações */}
                 <div className="flex gap-2 px-5 pb-5">
                     <button
                         onClick={onCancel}

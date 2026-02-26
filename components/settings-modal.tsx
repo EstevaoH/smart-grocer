@@ -31,7 +31,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
     const [saved, setSaved] = useState(false);
     const newCatRef = useRef<HTMLInputElement>(null);
 
-    // Close on Escape
     useEffect(() => {
         const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
         document.addEventListener("keydown", handler);
@@ -88,7 +87,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                     </button>
                 </div>
 
-                {/* Tab bar */}
                 <div className="flex border-b border-gray-100 shrink-0 overflow-x-auto">
                     {TABS.map(tab => (
                         <button
@@ -101,10 +99,8 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                     ))}
                 </div>
 
-                {/* Content */}
                 <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
 
-                    {/* ── PERFIL ── */}
                     {activeTab === "perfil" && (
                         <>
                             <div>
@@ -134,7 +130,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                         </>
                     )}
 
-                    {/* ── PREFERÊNCIAS ── */}
                     {activeTab === "preferencias" && (
                         <>
                             <div>
@@ -176,7 +171,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                         </>
                     )}
 
-                    {/* ── CATEGORIAS ── */}
                     {activeTab === "categorias" && (
                         <>
                             <div className="flex gap-2">
@@ -207,7 +201,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                         </>
                     )}
 
-                    {/* ── DADOS ── */}
                     {activeTab === "dados" && (
                         <div className="space-y-3">
                             <div className="bg-gray-50 rounded-2xl p-4 space-y-3">
@@ -234,7 +227,6 @@ export function SettingsModal({ profile, onSave, onClose, onClearData }: Setting
                     )}
                 </div>
 
-                {/* Save button footer */}
                 {activeTab !== "dados" && (
                     <div className="px-6 pb-6 pt-3 shrink-0 border-t border-gray-100">
                         <button

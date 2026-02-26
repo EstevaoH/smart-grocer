@@ -33,15 +33,12 @@ export function BIDashboard({ items }: BIDashboardProps) {
     const [sortDir, setSortDir] = useState<SortDir>("asc");
     const [activeView, setActiveView] = useState<ActiveView>("charts");
 
-    // F1 – date filter
-    // default: last 90 days
     const defaultEnd = toDateStr(new Date());
     const defaultStart = toDateStr(new Date(Date.now() - 90 * 86400000));
     const [dateFrom, setDateFrom] = useState(defaultStart);
     const [dateTo, setDateTo] = useState(defaultEnd);
     const [filterActive, setFilterActive] = useState(false);
 
-    // F3 – budget goal
     const [budget, setBudget] = useState<number>(0);
     const [budgetEdit, setBudgetEdit] = useState(false);
     const [budgetInput, setBudgetInput] = useState("");
@@ -61,10 +58,8 @@ export function BIDashboard({ items }: BIDashboardProps) {
         setBudgetEdit(false);
     };
 
-    // F2 – category selector
     const [selectedCat, setSelectedCat] = useState<string>("");
 
-    // filtered items
     const filtered = useMemo(() => {
         if (!filterActive) return items;
         const from = new Date(dateFrom + "T00:00:00");
@@ -112,7 +107,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
         });
     }, [filtered]);
 
-    // F2 – category monthly
     const allCategories = useMemo(() => [...new Set(items.map(i => i.category || "Outros"))].sort(), [items]);
     useEffect(() => { if (!selectedCat && allCategories.length > 0) setSelectedCat(allCategories[0]); }, [allCategories, selectedCat]);
 
@@ -135,10 +129,8 @@ export function BIDashboard({ items }: BIDashboardProps) {
         };
     }, [items, selectedCat]);
 
-    // F4 – top 5 expensive
     const top5 = useMemo(() => [...filtered].sort((a, b) => (b.price || 0) - (a.price || 0)).slice(0, 5), [filtered]);
 
-    // F6 – heatmap
     const heatmapData = useMemo(() => {
         const map: Record<string, number> = {};
         filtered.forEach(i => { const k = itemDayKey(i); map[k] = (map[k] || 0) + 1; });
@@ -169,7 +161,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
         return "#065f46";
     }
 
-    // Sorted table
     const sortedItems = useMemo(() => [...filtered].sort((a, b) => {
         let va: string | number = "", vb: string | number = "";
         if (sortKey === "name") { va = a.name.toLowerCase(); vb = b.name.toLowerCase(); }
@@ -182,7 +173,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
 
     const handleSort = (k: SortKey) => { if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc"); else { setSortKey(k); setSortDir("asc"); } };
 
-    // Chart options helpers
     const barOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "top" as const, labels: { font: { size: 12 }, color: "#6b7280" } }, tooltip: { callbacks: { label: (c: { dataset: { label?: string }; raw: unknown }) => ` ${c.dataset.label}: R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 11 } }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 11 }, callback: (v: number | string) => `R$ ${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
     const pieOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right" as const, labels: { font: { size: 12 }, color: "#6b7280", padding: 14 } }, tooltip: { callbacks: { label: (c: { label?: string; raw: unknown; chart: { data: { datasets: Array<{ data: unknown[] }> } } }) => { const total = (c.chart.data.datasets[0].data as number[]).reduce((s, v) => s + Number(v), 0); return ` ${c.label}: R$ ${fmt(Number(c.raw))} (${total > 0 ? ((Number(c.raw) / total) * 100).toFixed(1) : 0}%)`; } } } } };
     const lineOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c: { raw: unknown }) => ` R$ ${fmt(Number(c.raw))}` } } }, scales: { x: { ticks: { color: "#9ca3af", font: { size: 11 } }, grid: { display: false } }, y: { ticks: { color: "#9ca3af", font: { size: 11 }, callback: (v: number | string) => `R$ ${Number(v).toFixed(0)}` }, grid: { color: "#f3f4f6" } } } };
@@ -216,7 +206,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
     return (
         <div className="space-y-5">
 
-            {/* ── F1 DATE FILTER ── */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                 <div className="flex flex-wrap items-end gap-3">
                     <div className="flex flex-col gap-1 flex-1 min-w-0">
@@ -236,7 +225,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                     {filterActive && (
                         <button onClick={() => setFilterActive(false)} className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors"><X size={16} /></button>
                     )}
-                    {/* F5 CSV Export */}
                     <button onClick={() => exportCSV(filtered)} className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-600 hover:bg-emerald-50 hover:text-primary transition-all">
                         <Download size={15} />CSV
                     </button>
@@ -248,7 +236,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 )}
             </div>
 
-            {/* ── STAT CARDS ── */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <StatCard icon={<ShoppingCart size={18} className="text-blue-500" />} label="Total de itens" value={metrics.totalItems.toString()} bg="bg-blue-50" />
                 <StatCard icon={<CheckCircle2 size={18} className="text-emerald-500" />} label="Comprados" value={`${metrics.completedItems} / ${metrics.totalItems}`} bg="bg-emerald-50" />
@@ -258,7 +245,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 <StatCard icon={<BarChart2 size={18} className="text-rose-500" />} label="Preço médio" value={`R$ ${fmt(metrics.avgPrice)}`} bg="bg-rose-50" />
             </div>
 
-            {/* ── F3 BUDGET GOAL ── */}
             <div className={`rounded-2xl border shadow-sm p-4 ${budgetOver ? "bg-red-50 border-red-200" : budgetWarn ? "bg-yellow-50 border-yellow-200" : "bg-white border-gray-100"}`}>
                 <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
                     <div className="flex items-center gap-2">
@@ -298,7 +284,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 )}
             </div>
 
-            {/* ── VIEW TOGGLE ── */}
             <div className="flex gap-2 flex-wrap">
                 <TabBtn active={activeView === "charts"} onClick={() => setActiveView("charts")} icon={<PieChart size={15} />}>Gráficos</TabBtn>
                 <TabBtn active={activeView === "table"} onClick={() => setActiveView("table")} icon={<TableProperties size={15} />}>Tabela</TabBtn>
@@ -315,7 +300,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
 
-            {/* ── GRÁFICOS ── */}
             {!emptyState && activeView === "charts" && (
                 <div className="space-y-4">
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
@@ -327,7 +311,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                             <h3 className="text-sm font-semibold text-gray-700 mb-3">Distribuição por Categoria</h3>
                             <div className="h-56"><Pie data={pieData} options={pieOpts} /></div>
                         </div>
-                        {/* F4 Top 5 */}
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                             <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5"><Trophy size={15} className="text-amber-400" />Top 5 mais caros</h3>
                             {top5.length === 0 ? (
@@ -354,7 +337,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
 
-            {/* ── TABELA ── */}
             {!emptyState && activeView === "table" && (
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                     <div className="overflow-x-auto">
@@ -396,7 +378,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
 
-            {/* ── MENSAL ── */}
             {!emptyState && activeView === "mensal" && (
                 <div className="space-y-4">
                     {monthlyStats.length === 0 ? (
@@ -480,7 +461,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
 
-            {/* ── F2 CATEGORIA ── */}
             {!emptyState && activeView === "categoria" && (
                 <div className="space-y-4">
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
@@ -510,7 +490,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                 </div>
             )}
 
-            {/* ── F6 HEATMAP ── */}
             {!emptyState && activeView === "mapa" && (
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
                     <h3 className="text-sm font-semibold text-gray-700 mb-1">Mapa de Calor de Compras</h3>
@@ -519,7 +498,6 @@ export function BIDashboard({ items }: BIDashboardProps) {
                         {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(d => (
                             <div key={d} className="text-center text-[10px] text-gray-400 font-medium pb-1">{d}</div>
                         ))}
-                        {/* fill leading blanks */}
                         {heatmapDays.length > 0 && (() => {
                             const firstDay = new Date(heatmapDays[0].date + "T12:00:00").getDay();
                             return Array.from({ length: firstDay }, (_, i) => <div key={`blank-${i}`} />);

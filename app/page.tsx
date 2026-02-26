@@ -3,20 +3,15 @@
 import { useState } from "react";
 import { ShoppingBasket, CheckCircle2, Share2, Archive, ShoppingCart, BarChart2, Clock, Calculator, Settings, Trash2, Heart } from "lucide-react";
 import dynamic from "next/dynamic";
-
-// Features
 import { useShoppingList, ShoppingList, AddItem, RecipeGenerator } from "@/features/shopping-list";
 import { useListHistory, ListHistory } from "@/features/list-history";
 import { PriceCalculator } from "@/features/price-calculator";
-
-// Shared
 import { useNotification } from "@/shared/hooks/useNotification";
 import { useConfirmModal } from "@/shared/hooks/useConfirmModal";
 import { ConfirmModal } from "@/shared/components/confirm-modal";
 import { OnboardingWizard } from "@/shared/components/onboarding-wizard";
 import { SettingsModal } from "@/shared/components/settings-modal";
 
-// Types
 import { DEFAULT_PROFILE, UserProfile, loadProfile, saveProfile } from "@/types/user-profile";
 
 const BIDashboard = dynamic(
@@ -151,7 +146,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Tab bar */}
           <div className="flex gap-1 mt-3 -mb-px overflow-x-auto">
             {TABS.map(tab => (
               <button
@@ -261,7 +255,6 @@ export default function Home() {
         <SettingsModal profile={profile} onSave={handleSaveProfile} onClose={() => setShowSettings(false)} onClearData={handleClearData} />
       )}
 
-      {/* Archive modal */}
       {history.showArchiveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" onClick={e => { if (e.target === e.currentTarget) history.setShowArchiveModal(false); }}>
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 space-y-4">

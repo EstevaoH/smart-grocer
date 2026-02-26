@@ -125,7 +125,6 @@ export function PriceCalculator() {
                 </div>
             </div>
 
-            {/* Product slots */}
             <div className="space-y-3">
                 {products.map((product, index) => {
                     const result = results[index];
@@ -137,11 +136,10 @@ export function PriceCalculator() {
                         <div
                             key={product.id}
                             className={`rounded-2xl border-2 p-4 transition-all duration-300 ${isBest
-                                    ? "border-emerald-400 bg-emerald-50 shadow-md shadow-emerald-100"
-                                    : `${color.border} ${color.bg}`
+                                ? "border-emerald-400 bg-emerald-50 shadow-md shadow-emerald-100"
+                                : `${color.border} ${color.bg}`
                                 }`}
                         >
-                            {/* Slot header */}
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-2">
                                     <span className={`w-2.5 h-2.5 rounded-full ${isBest ? "bg-emerald-500" : color.dot}`} />
@@ -169,7 +167,6 @@ export function PriceCalculator() {
                                 </div>
                             </div>
 
-                            {/* Label (optional) */}
                             <input
                                 type="text"
                                 placeholder={`Nome (ex: Sabão em pó${index === 0 ? " 1,6kg" : index === 1 ? " 2,2kg" : ""})`}
@@ -178,9 +175,7 @@ export function PriceCalculator() {
                                 className="w-full px-3 py-2 bg-white/70 border border-white rounded-lg text-sm text-gray-700 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary mb-3 transition-all"
                             />
 
-                            {/* Price + Quantity + Unit row */}
                             <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-start">
-                                {/* Price */}
                                 <div>
                                     <label className="text-xs font-medium text-gray-400 mb-1 block">Preço</label>
                                     <div className="relative">
@@ -198,7 +193,6 @@ export function PriceCalculator() {
                                     </div>
                                 </div>
 
-                                {/* Quantity */}
                                 <div>
                                     <label className="text-xs font-medium text-gray-400 mb-1 block">Quantidade</label>
                                     <input
@@ -213,7 +207,6 @@ export function PriceCalculator() {
                                     />
                                 </div>
 
-                                {/* Unit */}
                                 <div>
                                     <label className="text-xs font-medium text-gray-400 mb-1 block">Unidade</label>
                                     <select
@@ -229,7 +222,6 @@ export function PriceCalculator() {
                                 </div>
                             </div>
 
-                            {/* Result */}
                             {result.valid && refUnit && (
                                 <div className={`mt-3 px-3 py-2 rounded-xl flex items-center justify-between ${isBest ? "bg-emerald-100" : "bg-white/60"
                                     }`}>
@@ -244,7 +236,6 @@ export function PriceCalculator() {
                 })}
             </div>
 
-            {/* Actions */}
             <div className="flex gap-3">
                 {products.length < 4 && (
                     <button
@@ -266,7 +257,6 @@ export function PriceCalculator() {
                 </button>
             </div>
 
-            {/* Tip */}
             {!hasComparison && (
                 <div className="text-center py-4">
                     <p className="text-sm text-gray-400">

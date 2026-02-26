@@ -93,7 +93,6 @@ export function AddItem({ onAddItem }: AddItemProps) {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        {/* Nome */}
                         <div>
                             <input
                                 {...register('name')}
@@ -108,7 +107,6 @@ export function AddItem({ onAddItem }: AddItemProps) {
                             )}
                         </div>
 
-                        {/* Quantidade */}
                         <div>
                             <input
                                 {...register('quantity')}
@@ -119,7 +117,6 @@ export function AddItem({ onAddItem }: AddItemProps) {
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
-                            {/* Categoria */}
                             <div className="col-span-2 sm:col-auto sm:flex-1">
                                 <select
                                     {...register('category')}
@@ -135,7 +132,6 @@ export function AddItem({ onAddItem }: AddItemProps) {
                                 )}
                             </div>
 
-                            {/* Preço */}
                             <div>
                                 <div className="relative">
                                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-medium">R$</span>

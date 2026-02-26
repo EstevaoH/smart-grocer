@@ -56,7 +56,6 @@ function SnapshotCard({ snapshot, onRestore, onDelete, onRename }: {
 
     return (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            {/* Card header */}
             <div className="p-4">
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
@@ -92,7 +91,6 @@ function SnapshotCard({ snapshot, onRestore, onDelete, onRename }: {
                     </button>
                 </div>
 
-                {/* Stats row */}
                 <div className="flex gap-3 mt-3 flex-wrap">
                     <span className="flex items-center gap-1 text-xs text-gray-500">
                         <ShoppingCart size={12} className="text-blue-400" />
@@ -113,7 +111,6 @@ function SnapshotCard({ snapshot, onRestore, onDelete, onRename }: {
                     )}
                 </div>
 
-                {/* Progress bar */}
                 <div className="mt-3 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
                         className="h-full bg-primary rounded-full transition-all"
@@ -122,7 +119,6 @@ function SnapshotCard({ snapshot, onRestore, onDelete, onRename }: {
                 </div>
                 <p className="text-xs text-gray-400 mt-1">{pct.toFixed(0)}% comprado</p>
 
-                {/* Actions */}
                 <div className="flex gap-2 mt-3 flex-wrap">
                     <button
                         onClick={() => onRestore(snapshot)}
@@ -145,7 +141,6 @@ function SnapshotCard({ snapshot, onRestore, onDelete, onRename }: {
                 </div>
             </div>
 
-            {/* Expanded items list */}
             {expanded && (
                 <div className="border-t border-gray-100 px-4 py-3 bg-gray-50">
                     <p className="text-xs font-semibold text-gray-500 mb-2">Itens arquivados</p>
@@ -185,7 +180,6 @@ export function ListHistory({ history, onRestore, onDelete, onRename }: ListHist
         );
     }
 
-    // Sort newest first
     const sorted = [...history].sort((a, b) => b.archivedAt.localeCompare(a.archivedAt));
 
     return (

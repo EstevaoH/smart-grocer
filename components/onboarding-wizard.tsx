@@ -54,7 +54,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
             <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden">
 
-                {/* Progress bar */}
                 <div className="h-1.5 bg-gray-100">
                     <div
                         className="h-full bg-gradient-to-r from-primary to-emerald-400 transition-all duration-500"
@@ -63,19 +62,15 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                 </div>
 
                 <div className="p-6 sm:p-8">
-                    {/* Header icon */}
                     <div className="flex justify-center mb-4">
                         <div className="bg-gradient-to-tr from-primary to-emerald-300 p-3 rounded-2xl shadow-lg shadow-emerald-200">
                             <ShoppingBasket className="text-white w-7 h-7" />
                         </div>
                     </div>
 
-                    {/* Step counter */}
                     <p className="text-center text-xs text-gray-400 font-medium mb-1">
                         Passo {step + 1} de {TOTAL_STEPS}
                     </p>
-
-                    {/* ── STEP 0: Nome + Emoji ── */}
                     {step === 0 && (
                         <div className="space-y-5">
                             <div className="text-center">
@@ -111,7 +106,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                         </div>
                     )}
 
-                    {/* ── STEP 1: Moeda + Orçamento ── */}
                     {step === 1 && (
                         <div className="space-y-5">
                             <div className="text-center">
@@ -158,7 +152,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                         </div>
                     )}
 
-                    {/* ── STEP 2: Categorias ── */}
                     {step === 2 && (
                         <div className="space-y-4">
                             <div className="text-center">
@@ -198,7 +191,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                         </div>
                     )}
 
-                    {/* ── Actions ── */}
                     <div className="flex gap-3 mt-7">
                         {step > 0 ? (
                             <button

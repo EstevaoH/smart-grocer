@@ -51,7 +51,6 @@ export function AlertModal({
                 className="w-full max-w-sm bg-white rounded-2xl shadow-2xl animate-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Cabeçalho */}
                 <div className="flex items-start justify-between p-5 pb-3">
                     <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-xl ${iconBg}`}>
@@ -68,10 +67,8 @@ export function AlertModal({
                     </button>
                 </div>
 
-                {/* Mensagem */}
                 <p className="px-5 pb-5 text-sm text-gray-500 leading-relaxed">{message}</p>
 
-                {/* Ação */}
                 <div className="px-5 pb-5">
                     <button
                         onClick={onClose}
